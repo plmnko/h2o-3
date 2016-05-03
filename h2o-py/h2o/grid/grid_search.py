@@ -211,13 +211,16 @@ class H2OGridSearch(object):
       grid_json = H2OConnection.get_json("Grids/"+grid.dest_key, _rest_version=kwargs['_rest_version'])
 
       error_index = 0
-      for error_message in grid_json["failure_details"]:
-        print("Errors/Warnings building gridsearch model!\nHyper-parameter settings: names {0}\nvalues: {1}\n"
-              "failure_details: {2}\n"
-              "failure_stack_traces: {3}\n".format(grid_json['hyper_names'],
-                                                   grid_json['failed_raw_params'][error_index],
-                                                   error_message, grid_json['failure_stack_traces'][error_index]))
-        error_index += 1
+      if isinstance(grid_json["failure_details"], (list, tuple)) and len(grid_json["failure_details"]) > 0:
+        print("Errors/Warnings building gridsearch model\n")
+
+        for error_message in grid_json["failure_details"]:
+          for h_name in grid_json['hyper_names']:
+            print("Hyper-parameter: {0}, {1}".format(h_name, grid_json['failed_params'][error_index][h_name]))
+
+          print("failure_details: {0}\nfailure_stack_traces: "
+                "{1}\n".format(error_message, grid_json['failure_stack_traces'][error_index]))
+          error_index += 1
     else:                              grid_json = H2OConnection.get_json("Grids/"+grid.dest_key)
 
     self.models = [h2o.get_model(key['name']) for key in grid_json['model_ids']]
