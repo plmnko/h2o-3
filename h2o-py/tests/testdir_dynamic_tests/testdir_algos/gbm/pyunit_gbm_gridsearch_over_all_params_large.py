@@ -417,8 +417,9 @@ class Test_gbm_grid_search:
                     test_manual_model_metrics = manual_model.model_performance()._metric_json[self.training_metric]
 
                     # just compare the mse in this case within tolerance:
-                    if (abs(model_runtime - each_model_runtime) < self.allowed_runtime_diff) and \
-                            (abs(test_grid_model_metrics - test_manual_model_metrics) > self.allowed_diff):
+                    if (each_model_runtime > 0) and \
+                            (abs(model_runtime - each_model_runtime)/each_model_runtime < self.allowed_runtime_diff) \
+                            and (abs(test_grid_model_metrics - test_manual_model_metrics) > self.allowed_diff):
                         self.test_failed += 1             # count total number of tests that have failed
                         print("test_gbm_grid_search_over_params for GBM failed: grid search model and manually "
                               "built H2O model differ too much in test MSE!")
