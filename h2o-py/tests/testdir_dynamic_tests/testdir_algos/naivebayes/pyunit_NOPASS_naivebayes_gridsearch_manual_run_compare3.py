@@ -19,8 +19,13 @@ class Test_naivebayes_grid_search:
     """
     PUBDEV-1843: Grid testing.  Subtask 2.
 
-    This class is created to debug the problems we have with gridsearch.  In particular, we have several kinds of
-    warning/error messages encountered:
+    This class is created to debug the problems we have with gridsearch.  In particular, we have encountered
+    several kinds of warning/error messages.  In this particular test, we look at a particular hyper-parameter
+    value setting:
+
+    Hyper-parameters used here is
+    {'fold_assignment': 'AUTO', 'laplace': 8.3532975, 'max_runtime_secs': 0.009854314056000001}
+
     """
     # parameters set by users, change with care
     random.seed(round(time.time()))
@@ -115,7 +120,8 @@ class Test_naivebayes_grid_search:
 
         params_list = dict()
         params_list["fold_assignment"] = self.final_hyper_params["fold_assignment"][0]
-        params_list["max_runtime_secs"] = self.final_hyper_params["max_runtime_secs"][1]
+ #       params_list["max_runtime_secs"] = self.final_hyper_params["max_runtime_secs"][1]
+        params_list["max_runtime_secs"] = 10
         params_list["laplace"] = self.final_hyper_params["laplace"][0]
 
         print("Hyper-parameters used here is {0}\n".format(params_list))
