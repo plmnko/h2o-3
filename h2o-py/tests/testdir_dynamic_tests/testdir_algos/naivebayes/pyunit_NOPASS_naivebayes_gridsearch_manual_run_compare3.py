@@ -114,14 +114,14 @@ class Test_naivebayes_grid_search:
         params_dict = dict()
         params_dict["nfolds"] = self.nfolds
 
-        manual_model = [None] * self.possible_number_models
-
-        model_index = 0
-
         params_list = dict()
         params_list["fold_assignment"] = self.final_hyper_params["fold_assignment"][0]
  #       params_list["max_runtime_secs"] = self.final_hyper_params["max_runtime_secs"][1]
-        params_list["max_runtime_secs"] = 10
+        params_list["max_runtime_secs"] = 10        # this will return full NB model
+
+        # the field manual_model._model_json['output']['cross_validation_metrics_summary'].cell_values will be empty
+        params_list["max_runtime_secs"] = 0.001     # this will not return full NB model
+
         params_list["laplace"] = self.final_hyper_params["laplace"][0]
 
         print("Hyper-parameters used here is {0}\n".format(params_list))
@@ -138,11 +138,11 @@ class Test_naivebayes_grid_search:
         else:
             max_runtime = 0
 
-        manual_model[model_index] = H2ONaiveBayesEstimator(**params_list)
-        manual_model[model_index].train(x=self.x_indices, y=self.y_index,
+        manual_model = H2ONaiveBayesEstimator(**params_list)
+        manual_model.train(x=self.x_indices, y=self.y_index,
                                         training_frame=self.training1_data, **model_params)
-        model_index += 1
 
+        print("Done!")
 
 def test_grid_search_for_naivebayes_over_all_params():
     """
