@@ -29,7 +29,7 @@ def grid_cars_NB():
 
     max_runtime_secs = 10  # this will return full NB model
     # the field manual_model._model_json['output']['cross_validation_metrics_summary'].cell_values will be empty
-#    max_runtime_secs = 0.001
+    max_runtime_secs = 0.001
 
     model_params = {'compute_metrics': True, 'fold_assignment': 'AUTO', 'laplace': 8.3532975, 'nfolds': 2}
 
