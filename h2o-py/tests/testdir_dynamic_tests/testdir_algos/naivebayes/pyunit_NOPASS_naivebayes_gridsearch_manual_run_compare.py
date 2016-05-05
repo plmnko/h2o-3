@@ -131,10 +131,6 @@ class Test_naivebayes_grid_search:
                 model_params["validation_frame"] = params_list["validation_frame"]
                 del params_list["validation_frame"]
 
-            if "score_tree_interval" in params_list:
-                model_params["score_tree_interval"] = params_list["score_tree_interval"]
-                del params_list["score_tree_interval"]
-
             if "eps_prob" in params_list:
                 model_params["eps_prob"] = params_list["eps_prob"]
                 del params_list["eps_prob"]
