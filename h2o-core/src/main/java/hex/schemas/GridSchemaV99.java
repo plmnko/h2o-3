@@ -132,6 +132,7 @@ public class GridSchemaV99 extends Schema<Grid, GridSchemaV99> {
         if (null != m) {
           Model.Output o = m._output;
 
+          // need to take care of the case when algos set _compute_metrics = false, o._training_metrics will be null!
           if (null != o._training_metrics)
             training_metrics[i] = (ModelMetricsBase) Schema.schema(3, o._training_metrics).fillFromImpl(o._training_metrics);
           if (null != o._validation_metrics) validation_metrics[i] = (ModelMetricsBase) Schema.schema(3, o._validation_metrics).fillFromImpl(o._validation_metrics);
